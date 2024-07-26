@@ -1,0 +1,20 @@
+version: '3.3'
+
+services:
+  db:
+    image: mysql:8.0.31
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'API_EXAMPLE'
+      MYSQL_PASSWORD: 'senha-mysql'
+      MYSQL_ROOT_PASSWORD: 'senha-mysql'
+    ports:
+      - '4406:4406'
+    expose:
+      - '4406'
+    volumes:
+      - my-db:/var/lib/mysql
+      - ./init:/docker-entrypoint-initdb.d
+
+volumes:
+  my-db:
