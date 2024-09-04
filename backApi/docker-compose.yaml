@@ -5,16 +5,16 @@ services:
     image: mysql:8.0.31
     restart: always
     environment:
-      MYSQL_DATABASE: 'API_EXAMPLE'
+      MYSQL_DATABASE: 'store'
       MYSQL_PASSWORD: 'senha-mysql'
       MYSQL_ROOT_PASSWORD: 'senha-mysql'
+      DATABASE_URL: mysql://root:senha-mysql@db:4406/store
     ports:
-      - '4406:4406'
+      - '4406:3306'
     expose:
-      - '4406'
+      - '3306'
     volumes:
       - my-db:/var/lib/mysql
       - ./init:/docker-entrypoint-initdb.d
-
 volumes:
   my-db:
