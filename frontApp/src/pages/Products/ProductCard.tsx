@@ -8,14 +8,8 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
     <div className="product-card">
-      <img
-        src={product.imageUrl}
-        alt={product.name}
-        className="product-image"
-      />
-      <h2 className="product-name">{product.name}</h2>
-      <p className="product-description">{product.description}</p>
-      <p className="product-price">${product.price.toFixed(2)}</p>
+      <h2>{product.productName}</h2>
+      <p>{product.productPrice}</p>
     </div>
   );
 };

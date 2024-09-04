@@ -1,34 +1,46 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ProductCard from './ProductCard';
 import { Product } from './types';
 import './products.css';
 
-// Mock data for demonstration
-const mockProducts: Product[] = [
-  {
-    id: 1,
-    name: 'Product 1',
-    description: 'Description for Product 1',
-    price: 29.99,
-    imageUrl:
-      'https://www.lumitecfoto.com.br/media/catalog/product/cache/1ef9ce0c30afabcfde8304b9a1519756/2/3/2394-0.jpg',
-  },
-  {
-    id: 2,
-    name: 'Product 2',
-    description: 'Description for Product 2',
-    price: 49.99,
-    imageUrl: 'https://m.media-amazon.com/images/I/41kecOmOXvL._AC_.jpg',
-  },
-  // Add more products as needed
-];
-
 const ProductPage: React.FC = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('http://localhost:3020/api/product');
+        if (!response.ok) {
+          throw new Error('Erro ao buscar produtos');
+        }
+        const data: Product[] = await response.json();
+        console.log(data); // Verifique os dados recebidos
+        setProducts(data);
+      } catch (error: any) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  if (loading) {
+    return <div>Carregando...</div>;
+  }
+
+  if (error) {
+    return <div>Erro: {error}</div>;
+  }
+
   return (
     <div className="product-page">
       <h1>Products</h1>
       <div className="product-list">
-        {mockProducts.map((product) => (
+        {products.map((product: Product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>

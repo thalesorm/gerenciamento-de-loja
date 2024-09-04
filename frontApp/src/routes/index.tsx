@@ -7,8 +7,8 @@ const AppRoutes: React.FC = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/product" element={<ProductPage />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/products" element={<ProductPage />} />
+        <Route path="/" element={<Login />} />
         {/* Defina outras rotas aqui */}
       </Routes>
     </Router>
